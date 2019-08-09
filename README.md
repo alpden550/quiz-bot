@@ -2,6 +2,8 @@
 
 Bot quiz for Telegram and VK
 
+Working bot in TG: [@dvmn_quiz_bot](@dvmn_quiz_bot)
+
 Commands for Telegram's bot:
 
 1. /start – start quiz
