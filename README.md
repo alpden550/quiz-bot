@@ -11,7 +11,7 @@ Commands for Telegram's bot:
 [![Telegram-2019-08-09-18-14-21.png](https://i.postimg.cc/VNSPRw9w/Telegram-2019-08-09-18-14-21.png)](https://postimg.cc/TyXsdZHN)
 
 To start in VK, type начать, старт, start
-To stop in VK, type закончить, конец, end
+To stop in VK, type закончить, стоп, stop, end
 
 [![2019-08-09-18-17-21.png](https://i.postimg.cc/Xv9Q3D4F/2019-08-09-18-17-21.png)](https://postimg.cc/Y4q1zR4q)
 

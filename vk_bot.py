@@ -94,7 +94,7 @@ def main():
                     message='Начнем игру..',
                     keyboard=create_keyboard()
                 )
-            elif event.text.lower() in ['закончить', 'конец', 'end']:
+            elif event.text.lower() in ['закончить', 'стоп', 'end', 'stop']:
                 vk.messages.send(
                     peer_id=event.user_id,
                     random_id=get_random_id(),
