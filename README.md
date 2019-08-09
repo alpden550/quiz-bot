@@ -8,7 +8,12 @@ Commands for Telegram's bot:
 2. /help – about this bot
 3. /exit, /cancel – quit game
 
+[![Telegram-2019-08-09-18-14-21.png](https://i.postimg.cc/VNSPRw9w/Telegram-2019-08-09-18-14-21.png)](https://postimg.cc/TyXsdZHN)
+
 To start in VK, type начать, старт, start
+To stop in VK, type закончить, конец, end
+
+[![2019-08-09-18-17-21.png](https://i.postimg.cc/Xv9Q3D4F/2019-08-09-18-17-21.png)](https://postimg.cc/Y4q1zR4q)
 
 ## How to install
 
