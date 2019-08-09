@@ -1,16 +1,21 @@
 # Quiz bot
 
+Bot quiz for Telegram and VK
+
 Commands for Telegram's bot:
 
 1. /start – start quiz
 2. /help – about this bot
 3. /exit, /cancel – quit game
 
+To start in VK, type начать, старт, start
+
 ## How to install
 
 1. Create a bot in Telegram @via BotFather, and get it API token.
 2. Create redis account in [Redislabs](https://redislabs.com/), and after that create [cloud database](https://docs.redislabs.com/latest/rc/quick-setup-redis-cloud/) (you can choose free plan).
 Get your endpoint database url and port.
+3. Create VK's group, allow it send messages, and get access token for it.
 
 Create .env file in the root directory and fill it:
 
@@ -19,6 +24,17 @@ TG_TOKEN=your tg bot token
 REDIS_DATABASE=redis database endpoint without port
 REDIS_PORT=redis database port
 REDIS_PSWRD=redis password
+VK_TOKEN=vk access token
+```
+
+Python3 must be already installed.
+
+Should use virtual env for project isolation.
+
+Then use pip (or pip3, if there is a conflict with Python2) to install dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
 ## How add new questions for bots
@@ -60,3 +76,17 @@ File for example:
 ```
 
 Or you can [download questions](http://dvmn.org/media/modules_dist/quiz-questions.zip) and unzip archive in the root.
+
+## How to use
+
+To run Telegram bot:
+
+```bash
+python tg_bot.py
+```
+
+To run VK bot:
+
+```bash
+python vk_bot.py
+```

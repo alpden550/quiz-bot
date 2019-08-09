@@ -33,6 +33,5 @@ def test_questions():
 
 
 if __name__ == "__main__":
-    # all_questions = get_all_questions()
-    # print(len(all_questions))
-    print(test_questions())
+    all_questions = get_all_questions()
+    print(len(all_questions))
