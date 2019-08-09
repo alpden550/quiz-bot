@@ -1,10 +1,31 @@
-# quiz-bot
+# Quiz bot
 
-## How add new questions
+Commands for Telegram's bot:
+
+1. /start – start quiz
+2. /help – about this bot
+3. /exit, /cancel – quit game
+
+## How to install
+
+1. Create a bot in Telegram @via BotFather, and get it API token.
+2. Create redis account in [Redislabs](https://redislabs.com/), and after that create [cloud database](https://docs.redislabs.com/latest/rc/quick-setup-redis-cloud/) (you can choose free plan).
+Get your endpoint database url and port.
+
+Create .env file in the root directory and fill it:
+
+```.env
+TG_TOKEN=your tg bot token
+REDIS_DATABASE=redis database endpoint without port
+REDIS_PORT=redis database port
+REDIS_PSWRD=redis password
+```
+
+## How add new questions for bots
 
 To create new questions, you must create a folder into the root directory and call it `quiz-questions`. After that, create new txt files with `KOI8-R` encoding and write into it new questions and answers separating them two spaces.
 
-For example:
+File for example:
 
 ```txt
 Вопрос 1:
@@ -37,3 +58,5 @@ For example:
 Ответ:
 Левкой (от греческого leukos - белый).
 ```
+
+Or you can [download questions](http://dvmn.org/media/modules_dist/quiz-questions.zip) and unzip archive in the root.

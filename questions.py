@@ -18,16 +18,21 @@ def get_questions_from_text(text):
 def get_all_questions(directory='quiz-questions'):
     all_questions = {}
     for file in os.listdir(directory):
-        try:
-            with open(f'{directory}/{file}', 'r', encoding='KOI8-R') as quiz_file:
-                all_text = quiz_file.read().split('\n\n')
-        except FileNotFoundError:
-            all_text = None
+        with open(f'{directory}/{file}', 'r', encoding='KOI8-R') as quiz_file:
+            all_text = quiz_file.read().split('\n\n')
         questions = get_questions_from_text(all_text)
         all_questions.update(questions)
     return all_questions
 
 
+def test_questions():
+    with open('1vs1200.txt', 'r') as file:
+        text = file.read().split('\n\n')
+    questions = get_questions_from_text(text)
+    return questions
+
+
 if __name__ == "__main__":
-    all_questions = get_all_questions()
-    print(len(all_questions))
+    # all_questions = get_all_questions()
+    # print(len(all_questions))
+    print(test_questions())
