@@ -1,8 +1,8 @@
 # Quiz bot
 
-Bot quiz for Telegram and VK
+Bot quiz for Telegram and VK. It uses text files to load questions and bot to ask its. Also, it uses Redis cloud databases to save intermediate results.
 
-Working bot in TG: [@dvmn_quiz_bot](@dvmn_quiz_bot)
+To find bot in TG: @dvmn_quiz_bot
 
 Commands for Telegram's bot:
 
