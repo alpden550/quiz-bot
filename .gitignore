@@ -126,4 +126,3 @@ dmypy.json
 .vscode/
 quiz-questions/
 1vs1200.txt
-redis_tools.py

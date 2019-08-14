@@ -2,6 +2,7 @@ import os
 import random
 from dotenv import load_dotenv
 import redis
+import redis_tools
 import vk_api
 from vk_api.utils import get_random_id
 from vk_api.longpoll import VkLongPoll, VkEventType
@@ -23,9 +24,8 @@ def handle_new_question(event, vk_api, redis, questions):
     except IndexError:
         rm_question, rm_answer = None, None
     if rm_question is not None:
-        del questions[rm_question]
+        redis_tools.save_user(redis, event.user_id, rm_question, rm_answer)
 
-        redis.set(event.user_id, rm_answer)
         vk_api.messages.send(
             peer_id=event.user_id,
             random_id=get_random_id(),
@@ -41,9 +41,10 @@ def handle_new_question(event, vk_api, redis, questions):
 
 
 def handle_answer(event, vk_api, redis):
-    answer = redis.get(event.user_id)
+    user = redis_tools.get_user(redis, event.user_id)
+    answer = user['last_answer']
 
-    if event.text.lower() == answer.lower():
+    if event.text.lower().strip('.') == answer.lower().strip('.'):
         vk_api.messages.send(
             peer_id=event.user_id,
             random_id=get_random_id(),
@@ -60,7 +61,13 @@ def handle_answer(event, vk_api, redis):
 
 
 def handle_give_up(event, vk_api, redis):
-    answer = redis.get(event.user_id)
+    user = redis_tools.get_user(redis, event.user_id)
+    if user:
+        answer = user.get('last_answer')
+    else:
+        answer = None
+    redis_tools.clear_user(redis, event.user_id)
+
     vk_api.messages.send(
         peer_id=event.user_id,
         random_id=get_random_id(),
@@ -80,7 +87,7 @@ def main():
     longpoll = VkLongPoll(vk_session)
 
     all_questions = get_all_questions()
-    redis_db = redis.Redis(
+    redis_db = redis.StrictRedis(
         host=db_url, port=db_port, password=db_password, charset='utf-8', decode_responses=True)
 
     for event in longpoll.listen():

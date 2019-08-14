@@ -6,6 +6,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, Rege
 from dotenv import load_dotenv
 from functools import partial
 import redis
+import redis_tools
 from questions import get_all_questions
 
 CHOOSING, ATTEMPT = range(2)
@@ -31,17 +32,17 @@ def start(bot, update):
 
 def handle_new_question(bot, update, questions, redis_db):
     rm_question, rm_answer = random.choice(tuple(questions.items()))
-    del questions[rm_question]
 
-    redis_db.set(update.message.chat_id, rm_answer)
+    redis_tools.save_user(redis_db, update.message.chat_id, rm_question, rm_answer)
     update.message.reply_text(rm_question)
     return ATTEMPT
 
 
 def handle_answer(bot, update, redis_db):
-    answer = redis_db.get(update.message.chat_id)
+    user = redis_tools.get_user(redis_db, update.message.chat_id)
+    answer = user['last_answer']
 
-    if update.message.text.lower() == answer.lower().strip('.'):
+    if update.message.text.lower().strip('.') == answer.lower().strip('.'):
         update.message.reply_text('Правильно! Поздравляю! Для следующего вопроса нажми «Новый вопрос»')
         return CHOOSING
     else:
@@ -50,7 +51,11 @@ def handle_answer(bot, update, redis_db):
 
 
 def handle_give_up(bot, update, redis_db):
-    answer = redis_db.get(update.message.chat_id)
+    user = redis_tools.get_user(redis_db, update.message.chat_id)
+    if user:
+        answer = user.get('last_answer')
+    else:
+        answer = None
     update.message.reply_text(
         f'Правильный ответ был {answer}\n\n'
         f'Для продолжения выбери "Новый Вопрос", для выхода из игры набери команды выхода.'
