@@ -17,13 +17,13 @@ def create_keyboard():
     return keyboard.get_keyboard()
 
 
-def handle_new_question(event, vk_api, redis):
+def handle_new_question(event, vk_api, redis, questions):
     try:
-        rm_question, rm_answer = random.choice(tuple(all_questions.items()))
+        rm_question, rm_answer = random.choice(tuple(questions.items()))
     except IndexError:
         rm_question, rm_answer = None, None
     if rm_question is not None:
-        del all_questions[rm_question]
+        del questions[rm_question]
 
         redis.set(event.user_id, rm_answer)
         vk_api.messages.send(
@@ -79,7 +79,6 @@ def main():
     vk = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
 
-    global all_questions
     all_questions = get_all_questions()
     redis_db = redis.Redis(
         host=db_url, port=db_port, password=db_password, charset='utf-8', decode_responses=True)
@@ -101,7 +100,7 @@ def main():
                     message='Игра закончилась. Чтобы начать заново, напечатайте начать, старт или start.'
                 )
             elif event.text == 'Новый вопрос':
-                handle_new_question(event, vk, redis_db)
+                handle_new_question(event, vk, redis_db, all_questions)
             elif event.text == 'Сдаться':
                 handle_give_up(event, vk, redis_db)
             else:

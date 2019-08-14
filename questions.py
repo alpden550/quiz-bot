@@ -17,10 +17,10 @@ def get_questions_from_text(text):
 
 def get_all_questions(directory='quiz-questions'):
     all_questions = {}
-    for file in os.listdir(directory):
+    for file in os.listdir(os.path.abspath(directory)):
         with open(f'{directory}/{file}', 'r', encoding='KOI8-R') as quiz_file:
-            all_text = quiz_file.read().split('\n\n')
-        questions = get_questions_from_text(all_text)
+            text_blocks = quiz_file.read().split('\n\n')
+        questions = get_questions_from_text(text_blocks)
         all_questions.update(questions)
     return all_questions
 
